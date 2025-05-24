@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Tableau de bord administrateur</h2>
+<ul>
+    <li>Chambres occupées : {{ occupied_rooms }}</li>
+    <li>Revenus totaux : {{ total_revenue }} €</li>
+    <li>Nombre de réservations : {{ total_reservations }}</li>
+</ul>
+{% endblock %}

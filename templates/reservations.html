@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mes réservations</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Chambre</th>
+            <th>Dates</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for res in reservations %}
+        <tr>
+            <td>{{ res.room.name }}</td>
+            <td>{{ res.start_date }} - {{ res.end_date }}</td>
+            <td>{{ res.status }}</td>
+            <td>
+                {% if session.get('role') == 'client' and res.status == 'active' %}
+                <a href="{{ url_for('cancel_reservation', reservation_id=res.id) }}" class="btn btn-danger btn-sm">Annuler</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Chambres</h2>
+{% if session.get('role') == 'admin' %}
+<a href="{{ url_for('add_room') }}" class="btn btn-primary mb-2">Ajouter une chambre</a>
+{% endif %}
+<div class="row">
+    {% for room in rooms %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            {% if room.photo %}
+            <img src="{{ url_for('static', filename='uploads/' ~ room.photo) }}" class="card-img-top" alt="photo">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ room.name }}</h5>
+                <p class="card-text">{{ room.description }}</p>
+                <p>Prix: {{ room.price }} €/nuit</p>
+                {% if session.get('role') == 'admin' %}
+                <a href="{{ url_for('edit_room', room_id=room.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                <a href="{{ url_for('delete_room', room_id=room.id) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                {% else %}
+                <a href="{{ url_for('reserve_room', room_id=room.id) }}" class="btn btn-success btn-sm">Réserver</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
